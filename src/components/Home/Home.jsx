@@ -35,39 +35,6 @@ export default function Home() {
 
     return (
         <div className="pt-5 min-h-screen bg-gradient-to-br from-blue-50 via-white to-blue-100 animate-fade-in font-sans">
-            
-            {/* Hero Section */}
-            {/* <section className="relative h-screen bg-gradient-to-r from-blue-900 via-blue-700 to-blue-500 text-white text-center py-24 md:py-40 lg:py-56 px-2 sm:px-4 shadow-2xl overflow-hidden animate-hero-slide">
-                <div className="absolute inset-0 opacity-30 bg-[url('https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=1200&q=80')] bg-cover bg-center pointer-events-none scale-110 blur-sm transition-all duration-1000" />
-                <div className="relative z-10 max-w-5xl mx-auto flex flex-col items-center">
-                    <h1 className="text-3xl sm:text-4xl md:text-6xl lg:text-8xl font-black mb-6 md:mb-8 drop-shadow-xl tracking-tight animate-text-pop font-display bg-gradient-to-r from-yellow-300 via-pink-400 to-blue-400 bg-clip-text text-transparent">
-                        Welcome to <span className="text-yellow-300 animate-jump font-display">My Jivika</span>
-                    </h1>
-                    <p className="text-lg sm:text-xl md:text-2xl lg:text-3xl max-w-xl md:max-w-3xl mx-auto mb-8 md:mb-12 font-medium drop-shadow-lg animate-fade-in font-body text-white/90">
-                        Building Skills, Shaping Futures – Your one-stop platform for learning and job opportunities.
-                    </p>
-                    <div className="flex flex-col sm:flex-row justify-center gap-4 sm:gap-8 w-full max-w-xs sm:max-w-none mx-auto">
-                        <a
-                            href="#jobs"
-                            className="bg-yellow-400 text-gray-900 font-bold px-6 sm:px-12 py-3 sm:py-5 rounded-full shadow-xl hover:bg-yellow-300 transition-all duration-300 text-lg sm:text-2xl flex items-center justify-center relative overflow-hidden group animate-btn-pop font-body"
-                        >
-                            <span className="absolute inset-0 bg-yellow-200 opacity-0 group-hover:opacity-30 transition-all duration-300 rounded-full blur-lg"></span>
-                            <span className="relative z-10">🔍 Explore Jobs</span>
-                        </a>
-                        <a
-                            href="#courses"
-                            className="bg-white text-blue-700 font-bold px-6 sm:px-12 py-3 sm:py-5 rounded-full shadow-xl hover:bg-blue-100 transition-all duration-300 text-lg sm:text-2xl flex items-center justify-center relative overflow-hidden group animate-btn-pop font-body"
-                        >
-                            <span className="absolute inset-0 bg-blue-200 opacity-0 group-hover:opacity-30 transition-all duration-300 rounded-full blur-lg"></span>
-                            <span className="relative z-10">📚 Browse Courses</span>
-                        </a>
-                    </div>
-                </div>
-                {/* Decorative animated shapes 
-                <div className="hidden sm:block absolute top-10 left-10 w-16 md:w-24 h-16 md:h-24 bg-yellow-300 rounded-full opacity-30 animate-float-slow" />
-                <div className="hidden sm:block absolute bottom-10 right-10 w-20 md:w-32 h-20 md:h-32 bg-blue-200 rounded-full opacity-20 animate-float-slower" />
-            </section> */}
-
             {/* Hero Section */}
 <section className="relative h-screen bg-gradient-to-r from-blue-900 via-blue-700 to-blue-500 text-white text-center px-2 sm:px-4 shadow-2xl overflow-hidden animate-hero-slide flex items-center justify-center">
     {/* Background image overlay */}
