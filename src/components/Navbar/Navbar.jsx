@@ -56,36 +56,39 @@
 
 
 import { useState, useEffect } from "react";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { 
-  FiHome, FiBriefcase, FiBookOpen, FiHelpCircle, FiUser, 
-  FiLogIn, FiChevronUp, FiStar, FiMessageSquare, FiBell, 
-  FiSettings, FiAward, FiUsers, FiBarChart2 
+  FiHome, FiBriefcase, FiBookOpen, FiHelpCircle, 
+  FiLogIn, FiChevronUp, FiUserPlus, FiUser 
 } from "react-icons/fi";
 import { motion, AnimatePresence } from "framer-motion";
 
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
   const location = useLocation();
+  const navigate = useNavigate();
 
+  // Simplified navigation links
   const navLinks = [
     { path: "/", name: "Home", icon: <FiHome /> },
     { path: "/jobs", name: "Jobs", icon: <FiBriefcase /> },
     { path: "/courses", name: "Courses", icon: <FiBookOpen /> },
-    { path: "/resources", name: "Resources", icon: <FiHelpCircle /> },
-    { path: "/employers", name: "Employers", icon: <FiUser /> },
-    { path: "/messages", name: "Messages", icon: <FiMessageSquare /> },
-    { path: "/notifications", name: "Alerts", icon: <FiBell /> },
-    { path: "/favorites", name: "Saved", icon: <FiStar /> },
-    { path: "/analytics", name: "Analytics", icon: <FiBarChart2 /> },
-    { path: "/community", name: "Community", icon: <FiUsers /> },
-    { path: "/achievements", name: "Achievements", icon: <FiAward /> },
-    { path: "/settings", name: "Settings", icon: <FiSettings /> }
+    { path: "/resources", name: "Resources", icon: <FiHelpCircle /> }
   ];
 
   useEffect(() => {
     setIsOpen(false);
   }, [location]);
+
+  const handleNavigation = (path) => {
+    setIsOpen(false);
+    navigate(path);
+  };
+
+  const handleAuthClick = () => {
+    setIsOpen(false);
+    navigate("/login"); // Default to login page
+  };
 
   return (
     <>
@@ -137,21 +140,17 @@ export default function Navbar() {
               animate={{ y: 0 }}
               exit={{ y: "100%" }}
               transition={{ type: "spring", stiffness: 300, damping: 25 }}
-              className="fixed inset-0 bg-gradient-to-b from-gray-900 via-gray-800 to-gray-900 z-40 pt-12 pb-32 overflow-y-auto"
+              className="fixed inset-0 bg-gradient-to-b from-gray-900 via-gray-800 to-gray-900 z-40 pt-12 pb-24 overflow-y-auto"
             >
               <div className="container mx-auto px-4 h-full flex flex-col">
-                {/* Animated Logo Header */}
+                {/* Logo Header */}
                 <motion.div 
                   initial={{ opacity: 0, y: -20 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ delay: 0.1 }}
                   className="flex justify-center mb-8"
                 >
-                  <Link 
-                    to="/" 
-                    onClick={() => setIsOpen(false)} 
-                    className="flex items-center space-x-3 group"
-                  >
+                  <div className="flex items-center space-x-3">
                     <motion.div 
                       whileHover={{ rotateY: 180 }}
                       transition={{ duration: 0.6 }}
@@ -165,29 +164,29 @@ export default function Navbar() {
                     >
                       CareerPulse
                     </motion.h1>
-                  </Link>
+                  </div>
                 </motion.div>
 
                 {/* Navigation Grid */}
                 <motion.div 
-                  className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-4 mb-8"
+                  className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4 mb-8"
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 1 }}
                   transition={{ staggerChildren: 0.05 }}
                 >
-                  {navLinks.map((link, index) => (
+                  {navLinks.map((item, index) => (
                     <motion.div
-                      key={link.path}
+                      key={item.path}
                       initial={{ y: 30, opacity: 0 }}
                       animate={{ y: 0, opacity: 1 }}
                       transition={{ type: "spring", delay: index * 0.05 }}
                       className="flex justify-center"
                     >
                       <Link
-                        to={link.path}
+                        to={item.path}
                         onClick={() => setIsOpen(false)}
                         className={`group flex flex-col items-center w-full p-4 rounded-2xl transition-all duration-300 ${
-                          location.pathname === link.path
+                          location.pathname === item.path
                             ? "bg-gradient-to-br from-blue-900/40 to-cyan-900/40 text-white shadow-inner"
                             : "bg-gray-800/30 text-gray-300 hover:bg-gray-700/50 hover:text-white"
                         }`}
@@ -195,51 +194,71 @@ export default function Navbar() {
                         <motion.span
                           whileHover={{ scale: 1.2 }}
                           className={`p-3 rounded-full mb-2 text-xl ${
-                            location.pathname === link.path
+                            location.pathname === item.path
                               ? "text-blue-300"
                               : "text-gray-400 group-hover:text-blue-400"
                           }`}
                         >
-                          {link.icon}
+                          {item.icon}
                         </motion.span>
                         <motion.span 
                           whileHover={{ scale: 1.05 }}
-                          className="text-sm font-medium"
+                          className="text-sm font-medium text-center"
                         >
-                          {link.name}
+                          {item.name}
                         </motion.span>
                       </Link>
                     </motion.div>
                   ))}
+
+                  {/* Combined Auth Button */}
+                  <motion.div
+                    initial={{ y: 30, opacity: 0 }}
+                    animate={{ y: 0, opacity: 1 }}
+                    transition={{ type: "spring", delay: navLinks.length * 0.05 }}
+                    className="flex justify-center"
+                  >
+                    <motion.button
+                      whileHover={{ scale: 1.05 }}
+                      whileTap={{ scale: 0.95 }}
+                      onClick={handleAuthClick}
+                      className={`w-full flex flex-col items-center p-4 rounded-2xl transition-all duration-300 ${
+                        location.pathname === "/login" || location.pathname === "/signup"
+                          ? "bg-gradient-to-br from-blue-900/40 to-cyan-900/40 text-white shadow-inner"
+                          : "bg-gray-800/30 text-gray-300 hover:bg-gray-700/50 hover:text-white"
+                      }`}
+                    >
+                      <motion.span
+                        whileHover={{ scale: 1.2 }}
+                        className={`p-3 rounded-full mb-2 text-xl ${
+                          location.pathname === "/login" || location.pathname === "/signup"
+                            ? "text-blue-300"
+                            : "text-gray-400 hover:text-blue-400"
+                        }`}
+                      >
+                        <FiLogIn />
+                      </motion.span>
+                      <span className="text-sm font-medium text-center">
+                        Login/Signup
+                      </span>
+                    </motion.button>
+                  </motion.div>
                 </motion.div>
 
-                {/* Enhanced Sign In Button */}
+                {/* Current User (if logged in) */}
                 <motion.div
-                  className="flex justify-center mt-auto"
-                  initial={{ y: 20, opacity: 0 }}
-                  animate={{ y: 0, opacity: 1 }}
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
                   transition={{ delay: 0.4 }}
+                  className="mt-auto pt-6 border-t border-gray-700/50 text-center"
                 >
-                  <Link
-                    to="/login"
-                    onClick={() => setIsOpen(false)}
-                    className="flex items-center space-x-3 px-8 py-4 bg-gradient-to-r from-blue-600 to-cyan-500 rounded-full text-white shadow-lg hover:shadow-xl hover:scale-105 transition-all"
+                  <button
+                    onClick={() => handleNavigation("/profile")}
+                    className="flex items-center justify-center space-x-2 text-gray-400 hover:text-white transition-colors mx-auto"
                   >
-                    <motion.div
-                      whileHover={{ rotate: 360 }}
-                      className="text-xl"
-                    >
-                      <FiLogIn />
-                    </motion.div>
-                    <span className="font-medium">Get Started</span>
-                    <motion.span 
-                      animate={{ x: [0, 5, 0] }}
-                      transition={{ repeat: Infinity, duration: 2 }}
-                      className="text-xs opacity-70"
-                    >
-                      →
-                    </motion.span>
-                  </Link>
+                    <FiUser className="text-lg" />
+                    <span>Your Profile</span>
+                  </button>
                 </motion.div>
               </div>
             </motion.div>
