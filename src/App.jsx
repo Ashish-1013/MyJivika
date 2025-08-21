@@ -4,6 +4,7 @@ import Navbar from './components/Navbar/Navbar.jsx';
 import Home from './components/Home/Home.jsx';
 import AuthPage from './components/Login & SignUp/AuthPage.jsx';
 import Footer from './components/Footer/Footer.jsx';
+import JobPage from './components/JobPage/JobPage.jsx';
 import GlobalStyle from './components/GlobalCss/GlobalStyles.jsx';
 
 
@@ -32,6 +33,7 @@ function App() {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/login" element={<AuthPage />} />
+        <Route path="/jobs" element={<JobPage />} />
       </Routes>
 
       <Footer />
