@@ -559,10 +559,10 @@
 
 // for left side nav
 import React from 'react';
-import { 
-  FiSearch, FiBookOpen, FiUser, FiAward, FiBriefcase, 
+import {
+  FiSearch, FiBookOpen, FiUser, FiAward, FiBriefcase,
   FiArrowRight, FiCode, FiDatabase, FiLayers, FiDollarSign,
-  FiMapPin, FiClock, FiBarChart2, FiCheckCircle 
+  FiMapPin, FiClock, FiBarChart2, FiCheckCircle
 } from 'react-icons/fi';
 import { motion, useScroll, useTransform } from 'framer-motion';
 import { useRef } from 'react';
@@ -605,7 +605,7 @@ const Home = () => {
       {/* Hero Section - Full Screen */}
       <section className="relative h-screen w-full overflow-hidden flex items-center justify-center">
         {/* Animated Background */}
-        <motion.div 
+        <motion.div
           style={{ y: yBg }}
           className="absolute inset-0 bg-gradient-to-br from-blue-900/80 via-gray-900 to-cyan-900/80 z-0"
         />
@@ -616,12 +616,12 @@ const Home = () => {
             <motion.div
               key={i}
               initial={{ opacity: 0, y: -20 }}
-              animate={{ 
+              animate={{
                 opacity: [0, 1, 0],
                 y: [0, Math.random() * 100 - 50],
                 x: [0, Math.random() * 100 - 50]
               }}
-              transition={{ 
+              transition={{
                 duration: 5 + Math.random() * 10,
                 repeat: Infinity,
                 delay: Math.random() * 5
@@ -636,7 +636,7 @@ const Home = () => {
         </div>
 
         <div className="container mx-auto px-6 relative z-10">
-          <motion.div 
+          <motion.div
             initial={{ opacity: 0, y: 50 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8 }}
@@ -671,7 +671,7 @@ const Home = () => {
                 whileTap={{ scale: 0.98 }}
                 className="bg-gradient-to-r from-blue-600 to-cyan-600 px-8 py-4 rounded-xl font-medium flex items-center gap-3 text-lg shadow-lg hover:shadow-blue-500/30"
               >
-                <FiSearch className="text-xl" /> 
+                <FiSearch className="text-xl" />
                 <span>Explore Jobs</span>
               </motion.button>
               
@@ -680,7 +680,7 @@ const Home = () => {
                 whileTap={{ scale: 0.98 }}
                 className="bg-transparent hover:bg-gray-800/50 border-2 border-gray-700 px-8 py-4 rounded-xl flex items-center gap-3 text-lg"
               >
-                <FiBookOpen className="text-xl" /> 
+                <FiBookOpen className="text-xl" />
                 <span>Browse Courses</span>
               </motion.button>
             </motion.div>
@@ -688,7 +688,7 @@ const Home = () => {
         </div>
 
         {/* Scroll Indicator */}
-        <motion.div 
+        <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 1.5 }}
