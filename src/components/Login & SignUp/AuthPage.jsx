@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';  //  for navigation
 import { motion, AnimatePresence } from 'framer-motion';
 import { 
   FiMail, FiLock, FiUser, FiEye, FiEyeOff, FiArrowRight,
@@ -18,6 +19,8 @@ const AuthPage = () => {
   const [errors, setErrors] = useState({});
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [showSuccess, setShowSuccess] = useState(false);
+
+  const navigate = useNavigate(); //  hook
 
   const toggleAuthMode = () => {
     setIsLogin(!isLogin);
@@ -43,10 +46,7 @@ const AuthPage = () => {
     if (!validateForm()) return;
     
     setIsSubmitting(true);
-    
-    // Simulate API call
-    await new Promise(resolve => setTimeout(resolve, 1500));
-    
+    await new Promise(resolve => setTimeout(resolve, 1500)); // simulate API call
     setIsSubmitting(false);
     setShowSuccess(true);
     setTimeout(() => setShowSuccess(false), 3000);
@@ -59,7 +59,7 @@ const AuthPage = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-900 to-gray-800 flex items-center justify-center p-4">
+    <div className="min-h-screen bg-gradient-to-br from-gray-900 to-gray-800 flex items-center justify-center p-4 pt-24">
       {/* Success Notification */}
       <AnimatePresence>
         {showSuccess && (
@@ -77,15 +77,15 @@ const AuthPage = () => {
         )}
       </AnimatePresence>
 
-      {/* Auth Card - Changed to flex-col for mobile */}
+      {/* Auth Card (kept full size as before) */}
       <motion.div 
         initial={{ opacity: 0, scale: 0.9 }}
         animate={{ opacity: 1, scale: 1 }}
         className="w-full max-w-4xl bg-gray-900/80 backdrop-blur-sm border border-gray-700/50 rounded-2xl overflow-hidden shadow-2xl"
       >
-        {/* Reordered for mobile - right panel first */}
         <div className="flex flex-col-reverse lg:flex-row min-h-[600px]">
-          {/* Right Panel - Welcome - Now shows on mobile at the top */}
+          
+          {/* Right Panel - Welcome */}
           <div className={`w-full lg:w-1/2 flex flex-col justify-center p-6 md:p-12 ${isLogin ? 'bg-gradient-to-br from-blue-900/80 to-blue-800/80' : 'bg-gradient-to-br from-gray-800 to-gray-700/80'}`}>
             <motion.div
               initial={{ opacity: 0, y: 20 }}
@@ -109,34 +109,35 @@ const AuthPage = () => {
               </motion.button>
             </motion.div>
 
-            {/* Features List - Simplified for mobile */}
-            <motion.div 
+            {/* Feature Buttons now clickable */}
+            <motion.div
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               transition={{ delay: 0.6 }}
               className="mt-8 grid grid-cols-2 gap-3 md:gap-4"
             >
               {[
-                { icon: <FiBriefcase className="text-lg md:text-xl" />, text: "Jobs" },
-                { icon: <FiUser className="text-lg md:text-xl" />, text: "Profile" },
-                { icon: <FiHelpCircle className="text-lg md:text-xl" />, text: "Guidance" },
-                { icon: <FiCheckCircle className="text-lg md:text-xl" />, text: "Skills" }
+                { icon: <FiBriefcase className="text-lg md:text-xl" />, text: "Jobs", path: "/jobs" },
+                { icon: <FiUser className="text-lg md:text-xl" />, text: "Profile", path: "/profile" },
+                { icon: <FiHelpCircle className="text-lg md:text-xl" />, text: "Guidance", path: "/resources" },
+                { icon: <FiCheckCircle className="text-lg md:text-xl" />, text: "Skills", path: "/courses" }
               ].map((feature, i) => (
-                <motion.div
+                <motion.button
                   key={i}
                   whileHover={{ y: -3 }}
+                  onClick={() => navigate(feature.path)}  //  navigate to route
                   className="flex items-center gap-2 text-gray-300 hover:text-white transition-colors text-xs md:text-sm"
                 >
                   <div className="w-6 h-6 md:w-8 md:h-8 bg-white/10 rounded-full flex items-center justify-center text-blue-400">
                     {feature.icon}
                   </div>
                   <span>{feature.text}</span>
-                </motion.div>
+                </motion.button>
               ))}
             </motion.div>
           </div>
 
-          {/* Left Panel - Form - Now shows after welcome on mobile */}
+          {/* Left Panel - Form */}
           <div className="w-full lg:w-1/2 p-6 md:p-12 flex flex-col justify-center">
             <AnimatePresence mode="wait">
               <motion.div
@@ -146,6 +147,7 @@ const AuthPage = () => {
                 exit={{ opacity: 0, x: 20 }}
                 transition={{ duration: 0.3 }}
               >
+                {/* Logo */}
                 <div className="flex items-center gap-3 mb-6">
                   <div className="w-8 h-8 md:w-10 md:h-10 rounded-lg bg-gradient-to-r from-blue-500 to-cyan-500 flex items-center justify-center text-white font-bold text-lg md:text-xl">
                     C
@@ -162,27 +164,15 @@ const AuthPage = () => {
                   {isLogin ? 'Sign in to continue' : 'Join us to start your journey'}
                 </p>
 
-                {/* Social Login - Smaller on mobile */}
+                {/* Social Login */}
                 <div className="flex justify-center gap-3 md:gap-4 mb-6">
-                  <motion.button
-                    whileHover={{ y: -3 }}
-                    whileTap={{ scale: 0.95 }}
-                    className="w-10 h-10 md:w-12 md:h-12 rounded-full bg-red-500 hover:bg-red-600 text-white flex items-center justify-center transition-colors"
-                  >
+                  <motion.button whileHover={{ y: -3 }} whileTap={{ scale: 0.95 }} className="w-10 h-10 md:w-12 md:h-12 rounded-full bg-red-500 hover:bg-red-600 text-white flex items-center justify-center transition-colors">
                     <FaGoogle className="text-lg md:text-xl" />
                   </motion.button>
-                  <motion.button
-                    whileHover={{ y: -3 }}
-                    whileTap={{ scale: 0.95 }}
-                    className="w-10 h-10 md:w-12 md:h-12 rounded-full bg-gray-700 hover:bg-gray-600 text-white flex items-center justify-center transition-colors"
-                  >
+                  <motion.button whileHover={{ y: -3 }} whileTap={{ scale: 0.95 }} className="w-10 h-10 md:w-12 md:h-12 rounded-full bg-gray-700 hover:bg-gray-600 text-white flex items-center justify-center transition-colors">
                     <FaGithub className="text-lg md:text-xl" />
                   </motion.button>
-                  <motion.button
-                    whileHover={{ y: -3 }}
-                    whileTap={{ scale: 0.95 }}
-                    className="w-10 h-10 md:w-12 md:h-12 rounded-full bg-blue-600 hover:bg-blue-700 text-white flex items-center justify-center transition-colors"
-                  >
+                  <motion.button whileHover={{ y: -3 }} whileTap={{ scale: 0.95 }} className="w-10 h-10 md:w-12 md:h-12 rounded-full bg-blue-600 hover:bg-blue-700 text-white flex items-center justify-center transition-colors">
                     <FaLinkedin className="text-lg md:text-xl" />
                   </motion.button>
                 </div>
@@ -201,11 +191,7 @@ const AuthPage = () => {
                 {/* Form */}
                 <form onSubmit={handleSubmit} className="space-y-3 md:space-y-4">
                   {!isLogin && (
-                    <motion.div
-                      initial={{ opacity: 0, height: 0 }}
-                      animate={{ opacity: 1, height: 'auto' }}
-                      className="space-y-1"
-                    >
+                    <motion.div initial={{ opacity: 0, height: 0 }} animate={{ opacity: 1, height: 'auto' }} className="space-y-1">
                       <label className="text-gray-400 text-xs md:text-sm">Full Name</label>
                       <div className="relative">
                         <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-gray-500">
@@ -243,11 +229,7 @@ const AuthPage = () => {
                   </div>
 
                   {!isLogin && (
-                    <motion.div
-                      initial={{ opacity: 0, height: 0 }}
-                      animate={{ opacity: 1, height: 'auto' }}
-                      className="space-y-1"
-                    >
+                    <motion.div initial={{ opacity: 0, height: 0 }} animate={{ opacity: 1, height: 'auto' }} className="space-y-1">
                       <label className="text-gray-400 text-xs md:text-sm">Phone (optional)</label>
                       <div className="relative">
                         <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-gray-500">

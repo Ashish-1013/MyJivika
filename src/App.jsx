@@ -6,6 +6,7 @@ import AuthPage from './components/Login & SignUp/AuthPage.jsx';
 import Footer from './components/Footer/Footer.jsx';
 import JobPage from './components/JobPage/JobPage.jsx';
 import GlobalStyle from './components/GlobalCss/GlobalStyles.jsx';
+import ProfilePage from './components/Profile/ProfilePage.jsx';
 
 
 
@@ -34,6 +35,7 @@ function App() {
         <Route path="/" element={<Home />} />
         <Route path="/login" element={<AuthPage />} />
         <Route path="/jobs" element={<JobPage />} />
+        <Route path="/ProfilePage" element={<ProfilePage />}/>
       </Routes>
 
       <Footer />
