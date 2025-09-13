@@ -118,7 +118,7 @@ const AuthPage = () => {
             >
               {[
                 { icon: <FiBriefcase className="text-lg md:text-xl" />, text: "Jobs", path: "/jobs" },
-                { icon: <FiUser className="text-lg md:text-xl" />, text: "Profile", path: "/profile" },
+                { icon: <FiUser className="text-lg md:text-xl" />, text: "Profile", path: "/ProfilePage" },
                 { icon: <FiHelpCircle className="text-lg md:text-xl" />, text: "Guidance", path: "/resources" },
                 { icon: <FiCheckCircle className="text-lg md:text-xl" />, text: "Skills", path: "/courses" }
               ].map((feature, i) => (
@@ -203,7 +203,7 @@ const AuthPage = () => {
                           value={formData.name}
                           onChange={handleChange}
                           className={`w-full bg-gray-800/50 border ${errors.name ? 'border-red-500' : 'border-gray-700/50'} rounded-lg pl-9 md:pl-10 pr-4 py-2 md:py-3 text-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm md:text-base`}
-                          placeholder="John Doe"
+                          placeholder="A.K.Giri"
                         />
                       </div>
                       {errors.name && <p className="text-red-400 text-xs">{errors.name}</p>}
@@ -222,7 +222,7 @@ const AuthPage = () => {
                         value={formData.email}
                         onChange={handleChange}
                         className={`w-full bg-gray-800/50 border ${errors.email ? 'border-red-500' : 'border-gray-700/50'} rounded-lg pl-9 md:pl-10 pr-4 py-2 md:py-3 text-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm md:text-base`}
-                        placeholder="your@email.com"
+                        placeholder="ashishkumargiri13@gmail.com"
                       />
                     </div>
                     {errors.email && <p className="text-red-400 text-xs">{errors.email}</p>}
@@ -241,7 +241,7 @@ const AuthPage = () => {
                           value={formData.phone}
                           onChange={handleChange}
                           className="w-full bg-gray-800/50 border border-gray-700/50 rounded-lg pl-9 md:pl-10 pr-4 py-2 md:py-3 text-white focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent text-sm md:text-base"
-                          placeholder="+1 (123) 456-7890"
+                          placeholder="+91 9078262605"
                         />
                       </div>
                     </motion.div>
