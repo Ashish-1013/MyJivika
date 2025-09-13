@@ -2,8 +2,7 @@ import { motion } from "framer-motion";
 import { 
   FiUser, FiBriefcase, FiMail, FiPhone, 
   FiMapPin, FiEdit2, FiCheckCircle, FiSettings,
-  FiSave, FiX, FiPlus, FiTrash2, FiUpload, FiCamera,
-  FiBookOpen
+  FiSave, FiX, FiPlus, FiTrash2, FiCamera, FiBookOpen
 } from "react-icons/fi";
 import { FaLinkedin, FaGithub, FaTwitter } from "react-icons/fa";
 import { useState, useRef } from "react";
@@ -55,21 +54,8 @@ const ProfilePage = () => {
       degree: "B.Tech in Computer Science",
       period: "2015 - 2019",
       grade: "8.5 CGPA"
-    },
-    {
-      id: 2,
-      institution: "Kendrapada College",
-      degree: "Intermediate Science",
-      period: "2013 - 2015",
-      grade: "75%"
     }
   ]);
-  const [newEducation, setNewEducation] = useState({
-    institution: "",
-    degree: "",
-    period: "",
-    grade: ""
-  });
   const fileInputRef = useRef(null);
 
   const handleInputChange = (e) => {
@@ -135,32 +121,26 @@ const ProfilePage = () => {
   };
 
   const handleAddEducation = () => {
-    if (newEducation.institution && newEducation.degree) {
-      setEducation([
-        ...education,
-        {
-          id: Date.now(),
-          ...newEducation
-        }
-      ]);
-      setNewEducation({
+    setEducation([
+      ...education,
+      {
+        id: Date.now(),
         institution: "",
         degree: "",
         period: "",
         grade: ""
-      });
-    }
+      }
+    ]);
   };
 
   const handleRemoveEducation = (id) => {
     setEducation(education.filter(edu => edu.id !== id));
   };
 
-  const handleEducationChange = (field, value) => {
-    setNewEducation({
-      ...newEducation,
-      [field]: value
-    });
+  const handleEducationChange = (id, field, value) => {
+    setEducation(education.map(edu => 
+      edu.id === id ? { ...edu, [field]: value } : edu
+    ));
   };
 
   return (
@@ -241,20 +221,27 @@ const ProfilePage = () => {
             {/* Social Links */}
             <div className="flex justify-center md:justify-start gap-4 mt-4">
               {isEditing ? (
-                <div className="flex gap-2">
+                <div className="flex gap-2 flex-wrap">
                   <input
                     type="text"
                     placeholder="LinkedIn URL"
                     value={profileData.linkedin}
                     onChange={(e) => setProfileData({...profileData, linkedin: e.target.value})}
-                    className="bg-gray-800 text-white p-2 rounded text-sm w-32"
+                    className="bg-gray-800 text-white p-2 rounded text-sm"
                   />
                   <input
                     type="text"
                     placeholder="GitHub URL"
                     value={profileData.github}
                     onChange={(e) => setProfileData({...profileData, github: e.target.value})}
-                    className="bg-gray-800 text-white p-2 rounded text-sm w-32"
+                    className="bg-gray-800 text-white p-2 rounded text-sm"
+                  />
+                  <input
+                    type="text"
+                    placeholder="Twitter URL"
+                    value={profileData.twitter}
+                    onChange={(e) => setProfileData({...profileData, twitter: e.target.value})}
+                    className="bg-gray-800 text-white p-2 rounded text-sm"
                   />
                 </div>
               ) : (
@@ -430,12 +417,14 @@ const ProfilePage = () => {
               <h3 className="text-xl font-semibold text-white flex items-center gap-2">
                 <FiBriefcase /> Work Experience
               </h3>
-              <button 
-                onClick={handleAddExperience}
-                className="px-3 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded flex items-center gap-2"
-              >
-                <FiPlus /> Add Experience
-              </button>
+              {isEditing && (
+                <button 
+                  onClick={handleAddExperience}
+                  className="px-3 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded flex items-center gap-2"
+                >
+                  <FiPlus /> Add Experience
+                </button>
+              )}
             </div>
             
             <div className="space-y-6">
@@ -498,7 +487,7 @@ const ProfilePage = () => {
           </motion.div>
         )}
 
-        {/* Education Section - FIXED */}
+        {/* Education Section */}
         {activeTab === "education" && (
           <motion.div {...fadeInUp(0.2)} 
             className="bg-gray-900/80 backdrop-blur-lg border border-gray-700/50 
@@ -518,48 +507,6 @@ const ProfilePage = () => {
               )}
             </div>
             
-            {isEditing && (
-              <div className="bg-gray-800/50 p-4 rounded-lg mb-6">
-                <h4 className="text-white font-medium mb-3">Add New Education</h4>
-                <div className="grid md:grid-cols-2 gap-3">
-                  <input
-                    type="text"
-                    value={newEducation.institution}
-                    onChange={(e) => handleEducationChange('institution', e.target.value)}
-                    className="bg-gray-700 text-white p-2 rounded text-sm"
-                    placeholder="Institution Name"
-                  />
-                  <input
-                    type="text"
-                    value={newEducation.degree}
-                    onChange={(e) => handleEducationChange('degree', e.target.value)}
-                    className="bg-gray-700 text-white p-2 rounded text-sm"
-                    placeholder="Degree"
-                  />
-                  <input
-                    type="text"
-                    value={newEducation.period}
-                    onChange={(e) => handleEducationChange('period', e.target.value)}
-                    className="bg-gray-700 text-white p-2 rounded text-sm"
-                    placeholder="Period (e.g., 2015 - 2019)"
-                  />
-                  <input
-                    type="text"
-                    value={newEducation.grade}
-                    onChange={(e) => handleEducationChange('grade', e.target.value)}
-                    className="bg-gray-700 text-white p-2 rounded text-sm"
-                    placeholder="Grade/CGPA"
-                  />
-                </div>
-                <button 
-                  onClick={handleAddEducation}
-                  className="mt-3 px-4 py-2 bg-green-600 hover:bg-green-700 text-white rounded text-sm"
-                >
-                  Add Education
-                </button>
-              </div>
-            )}
-            
             <div className="space-y-6">
               {education.map((edu) => (
                 <motion.div
@@ -575,10 +522,45 @@ const ProfilePage = () => {
                     </button>
                   )}
                   
-                  <h4 className="text-white font-semibold">{edu.institution}</h4>
-                  <p className="text-green-400">{edu.degree}</p>
-                  <p className="text-gray-400 text-sm">{edu.period}</p>
-                  {edu.grade && <p className="text-gray-300 mt-1 text-sm">Grade: {edu.grade}</p>}
+                  {isEditing ? (
+                    <div className="space-y-3">
+                      <input
+                        type="text"
+                        value={edu.institution}
+                        onChange={(e) => handleEducationChange(edu.id, 'institution', e.target.value)}
+                        className="text-white font-semibold bg-gray-800 p-2 rounded w-full"
+                        placeholder="Institution Name"
+                      />
+                      <input
+                        type="text"
+                        value={edu.degree}
+                        onChange={(e) => handleEducationChange(edu.id, 'degree', e.target.value)}
+                        className="text-green-400 bg-gray-800 p-2 rounded w-full"
+                        placeholder="Degree"
+                      />
+                      <input
+                        type="text"
+                        value={edu.period}
+                        onChange={(e) => handleEducationChange(edu.id, 'period', e.target.value)}
+                        className="text-gray-400 bg-gray-800 p-2 rounded w-full text-sm"
+                        placeholder="Period (e.g., 2015 - 2019)"
+                      />
+                      <input
+                        type="text"
+                        value={edu.grade}
+                        onChange={(e) => handleEducationChange(edu.id, 'grade', e.target.value)}
+                        className="text-gray-300 bg-gray-800 p-2 rounded w-full text-sm"
+                        placeholder="Grade/CGPA"
+                      />
+                    </div>
+                  ) : (
+                    <>
+                      <h4 className="text-white font-semibold">{edu.institution}</h4>
+                      <p className="text-green-400">{edu.degree}</p>
+                      <p className="text-gray-400 text-sm">{edu.period}</p>
+                      {edu.grade && <p className="text-gray-300 mt-1 text-sm">Grade: {edu.grade}</p>}
+                    </>
+                  )}
                 </motion.div>
               ))}
             </div>
